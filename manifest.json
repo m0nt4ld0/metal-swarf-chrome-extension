@@ -1,23 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Metal Swarf - Magnet y Modal",
+  "icons": {
+    "128": "magnet_128.png"
+  },
+  "name": "Metal Swarf Extension",
+  "author": "Mariela Silvana Montaldo",
   "version": "1.0",
-  "description": "Extrae enlaces magnet y muestra un modal en la página activa.",
-  "permissions": ["scripting", "activeTab"],
+  "description": "Busca enlaces magnet en la página actual, los copia al portapapeles y los descarga como un archivo de texto.",
+  "permissions": ["scripting", "activeTab", "clipboardWrite", "tabs", "windows"],
   "host_permissions": ["<all_urls>"],
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "icon.png",
-      "48": "icon.png",
-      "128": "icon.png"
-    }
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["content.css"]
-    }
-  ]
+    "default_popup": "MetalSwarf.html",
+    "default_icon": "icon.png"
+  }
 }
