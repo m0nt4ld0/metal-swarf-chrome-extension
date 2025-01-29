@@ -25,7 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.scripting.executeScript(
           {
             target: { tabId: tab.id },
-            func: () => document.documentElement.outerHTML,
+            func: () => {
+              // Get both the HTML and all href attributes
+              const html = document.documentElement.outerHTML;
+              const links = Array.from(document.getElementsByTagName('a'))
+                .map(a => a.href)
+                .filter(href => href.endsWith('.torrent'));
+              
+              return { html, torrentLinks: links };
+            },
           },
           async (results) => {
             if (chrome.runtime.lastError) {
@@ -33,29 +41,47 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (!results || !results[0] || !results[0].result) {
-              throw new Error("No se pudo obtener el HTML de la página.");
+              throw new Error("No se pudo obtener el contenido de la página.");
             }
 
-            const regex = /magnet:\?xt=urn:btih:[a-zA-Z0-9]+/g;
-            const matches = results[0].result.match(regex);
+            const { html, torrentLinks } = results[0].result;
 
-            if (matches && matches.length > 0) {
-              let magnetLinks = matches.join("\n");
-              await navigator.clipboard.writeText(magnetLinks);
-              alert("Enlaces magnet copiados al portapapeles con éxito.");
+            // Find magnet links
+            const magnetRegex = /magnet:\?xt=urn:btih:[a-zA-Z0-9]+/g;
+            const magnetMatches = html.match(magnetRegex) || [];
 
-              const tabTitle = tab.title;
-              const fileContent = magnetLinks;
-              const blob = new Blob([fileContent], { type: 'text/plain' });
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = `enlaces_magnet - ${tabTitle}.txt`;
-              link.click();
-              URL.revokeObjectURL(url);
-            } else {
-              alert("No se encontraron enlaces magnet en la página.");
+            // Prepare the content with sections
+            let fileContent = '';
+            
+            if (magnetMatches.length > 0) {
+              fileContent += "=== ENLACES MAGNET ===\n";
+              fileContent += magnetMatches.join('\n');
             }
+
+            if (torrentLinks.length > 0) {
+              if (fileContent) fileContent += '\n\n';
+              fileContent += "=== ENLACES TORRENT ===\n";
+              fileContent += torrentLinks.join('\n');
+            }
+
+            if (magnetMatches.length === 0 && torrentLinks.length === 0) {
+              alert("No se encontraron enlaces magnet ni torrent en la página.");
+              return;
+            }
+
+            // Copy to clipboard
+            await navigator.clipboard.writeText(fileContent);
+            alert("Enlaces copiados al portapapeles con éxito.");
+
+            // Download as file
+            const tabTitle = tab.title;
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `enlaces_${tabTitle}.txt`;
+            link.click();
+            URL.revokeObjectURL(url);
           }
         );
       } catch (error) {
