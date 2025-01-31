@@ -11,7 +11,7 @@
 
 ## 🚀 **Instalación**
 
-La extensión está en proceso de publicación en la [Chrome Web Store](https://chrome.google.com/webstore/) pero puedes descargarla de la siguiente manera.
+La extensión está publicada en la [Chrome Web Store](https://chromewebstore.google.com/detail/metal-swarf-extension/noifbnbpkfcdojnaolnchfnkngepppjn?authuser=0&hl=es), aunque también puedes descargarla de la siguiente manera.
 
 1. Descarga el archivo .zip en el repositorio GitHub ![Captura desde 2025-01-21 11-20-46](https://github.com/user-attachments/assets/6d4fb34f-2e37-4933-a0b9-5ad98ded2737) y descomprimelo.
 2. En la barra de direcciones de tu navegador, escribe `chrome://extensions/` y presiona "Enter". En este ejemplo, estoy utilizando Brave, con lo cual voy a escribir `brave://extensions/`. A continuación, activar **Modo Desarrollador** en la parte derecha, y hacer clic en "**Cargar descomprimida**". ![image](https://github.com/user-attachments/assets/d25fb6e6-5dfe-4049-813c-09b84340fa6e)
@@ -85,7 +85,7 @@ Este proyecto está licenciado bajo la [Licencia MIT](https://opensource.org/lic
 
 ## 🚀 **Installation**  
 
-The extension is pending publication on the [Chrome Web Store](https://chrome.google.com/webstore/), but you can install it manually:  
+The extension is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/metal-swarf-extension/noifbnbpkfcdojnaolnchfnkngepppjn?authuser=0&hl=es), or you can install it manually:  
 
 1. Download the .zip file from the GitHub repository ![Download screenshot](https://github.com/user-attachments/assets/6d4fb34f-2e37-4933-a0b9-5ad98ded2737) and extract it.
    
