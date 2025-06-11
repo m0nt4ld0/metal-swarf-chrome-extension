@@ -1,0 +1,25 @@
+{
+  "page_title": { "message": "Acerca de Metal Swarf" },
+  "about_heading": { "message": "Acerca de Metal Swarf" },
+  "license_line1": { "message": "Esta extensión está bajo la licencia del MIT." },
+  "license_line2": {
+    "message": "Puedes redistribuirla, modificarla y usarla con cualquier propósito, comercial o no, bajo tu propia responsabilidad, siempre y cuando des crédito al autor original."
+  },
+  "source_code": { "message": "Puedes encontrar el código fuente en GitHub:" },
+  "close_button": { "message": "Cerrar" },
+  "get_html_btn": { "message": "Obtener HTML" },
+  "open_modal_btn": { "message": "Acerca de" },
+  "error_no_tab": { "message": "No se encontró una pestaña activa." },
+  "error_invalid_url": { "message": "La pestaña no es una página web válida." },
+  "error_no_html": { "message": "No se pudo obtener el HTML de la página." },
+  "error_generic": { "message": "Error" },
+  "success_copy": { "message": "Enlaces magnet copiados al portapapeles con éxito." },
+  "no_magnets": { "message": "No se encontraron enlaces magnet en la página." },
+  "filename_prefix": { "message": "enlaces_magnet" },
+  "extension_name": {
+    "message": "Extensión Metal Swarf"
+  },
+  "extension_description": {
+    "message": "Busca enlaces magnet en la página actual, los copia al portapapeles y los descarga como un archivo de texto."
+  }  
+}

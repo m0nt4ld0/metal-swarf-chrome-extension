@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "version": "1.0",
+  "author": "Mariela Silvana Montaldo",
+  "default_locale": "en",
   "icons": {
     "128": "magnet_128.png"
   },
-  "name": "Metal Swarf Extension",
-  "author": "Mariela Silvana Montaldo",
-  "version": "1.0",
-  "description": "Busca enlaces magnet en la página actual, los copia al portapapeles y los descarga como un archivo de texto.",
   "permissions": ["scripting", "activeTab", "clipboardWrite", "tabs", "windows"],
   "host_permissions": ["<all_urls>"],
   "action": {
