@@ -1,0 +1,26 @@
+{
+    "page_title": { "message": "About Metal Swarf" },
+    "about_heading": { "message": "About Metal Swarf" },
+    "license_line1": { "message": "This extension is licensed under the MIT license." },
+    "license_line2": {
+      "message": "You may redistribute, modify, and use it for any purpose, commercial or not, at your own risk, provided you credit the original author."
+    },
+    "source_code": { "message": "You can find the source code on GitHub:" },
+    "close_button": { "message": "Close" },
+    "get_html_btn": { "message": "Get HTML" },
+    "open_modal_btn": { "message": "About" },
+    "error_no_tab": { "message": "No active tab found." },
+    "error_invalid_url": { "message": "The tab is not a valid web page." },
+    "error_no_html": { "message": "Failed to retrieve the page HTML." },
+    "error_generic": { "message": "Error" },
+    "success_copy": { "message": "Magnet links copied to clipboard successfully." },
+    "no_magnets": { "message": "No magnet links found on the page." },
+    "filename_prefix": { "message": "magnet_links" },
+    "extension_name": {
+      "message": "Metal Swarf Extension"
+    },
+    "extension_description": {
+      "message": "Search for magnet links on the current page, copy them to the clipboard, and download them as a text file."
+    } 
+  }
+  
