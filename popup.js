@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const getHtmlBtn = document.getElementById("getHtml");
   const closeModalBtn = document.getElementById("closeModal");
 
-  // Traducción de textos del DOM usando i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const msg = chrome.i18n.getMessage(key);
