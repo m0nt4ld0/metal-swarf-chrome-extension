@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const getHtmlBtn = document.getElementById("getHtml");
   const closeModalBtn = document.getElementById("closeModal");
 
-  // Traducción de textos del DOM
+  // Traducción de textos del DOM usando i18n
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     const msg = chrome.i18n.getMessage(key);
@@ -33,7 +33,13 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.scripting.executeScript(
           {
             target: { tabId: tab.id },
-            func: () => document.documentElement.outerHTML,
+            func: () => {
+              const html = document.documentElement.outerHTML;
+              const links = Array.from(document.getElementsByTagName('a'))
+                .map(a => a.href)
+                .filter(href => href.endsWith('.torrent'));
+              return { html, torrentLinks: links };
+            },
           },
           async (results) => {
             if (chrome.runtime.lastError) {
@@ -44,26 +50,38 @@ document.addEventListener("DOMContentLoaded", () => {
               throw new Error(chrome.i18n.getMessage("error_no_html"));
             }
 
-            const regex = /magnet:\?xt=urn:btih:[a-zA-Z0-9]+/g;
-            const matches = results[0].result.match(regex);
+            const { html, torrentLinks } = results[0].result;
+            const magnetRegex = /magnet:\?xt=urn:btih:[a-zA-Z0-9]+/g;
+            const magnetMatches = html.match(magnetRegex) || [];
 
-            if (matches && matches.length > 0) {
-              let magnetLinks = matches.join("\n");
-              await navigator.clipboard.writeText(magnetLinks);
-              alert(chrome.i18n.getMessage("success_copy"));
+            let fileContent = '';
 
-              const tabTitle = tab.title;
-              const fileContent = magnetLinks;
-              const blob = new Blob([fileContent], { type: 'text/plain' });
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = `${chrome.i18n.getMessage("filename_prefix")} - ${tabTitle}.txt`;
-              link.click();
-              URL.revokeObjectURL(url);
-            } else {
-              alert(chrome.i18n.getMessage("no_magnets"));
+            if (magnetMatches.length > 0) {
+              fileContent += `${chrome.i18n.getMessage("magnet_section")}\n`;
+              fileContent += magnetMatches.join('\n');
             }
+
+            if (torrentLinks.length > 0) {
+              if (fileContent) fileContent += '\n\n';
+              fileContent += `${chrome.i18n.getMessage("torrent_section")}\n`;
+              fileContent += torrentLinks.join('\n');
+            }
+
+            if (magnetMatches.length === 0 && torrentLinks.length === 0) {
+              alert(chrome.i18n.getMessage("no_links_found"));
+              return;
+            }
+
+            await navigator.clipboard.writeText(fileContent);
+            alert(chrome.i18n.getMessage("success_copy"));
+
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const blobUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = `${chrome.i18n.getMessage("filename_prefix")} - ${tab.title}.txt`;
+            link.click();
+            URL.revokeObjectURL(blobUrl);
           }
         );
       } catch (error) {
